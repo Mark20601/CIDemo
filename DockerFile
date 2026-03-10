@@ -1,36 +1,9 @@
-# Step 1: Use a PHP-FPM base image
-FROM php:8.2-fpm-alpine
+FROM php:8.2-cli
 
-# Step 2: Install system dependencies and PHP extensions
-RUN apk add --no-cache \
-    nginx \
-    supervisor \
-    libpng-dev \
-    libxml2-dev \
-    zip \
-    unzip
+WORKDIR /app
 
-RUN docker-php-ext-install pdo_mysql bcmath gd
-
-# Step 3: Configure Nginx
-# We'll replace the default config with a custom one later
-COPY .docker/nginx.conf /etc/nginx/http.d/default.conf
-
-# Step 4: Set the working directory
-WORKDIR /var/www/html
-
-# Step 5: Copy application code
 COPY . .
 
-# Step 6: Install Composer (Optional, if you have dependencies)
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --no-dev --optimize-autoloader
+EXPOSE 10000
 
-# Step 7: Setup Supervisor to run both Nginx and PHP-FPM
-COPY .docker/supervisord.conf /etc/supervised/conf.d/supervisord.conf
-
-# Render uses the $PORT env var, but Nginx usually listens on 80.
-# We will ensure our config uses the correct port.
-EXPOSE 80
-
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervised/conf.d/supervisord.conf"]
+CMD ["php", "-S", "0.0.0.0:10000"]

@@ -1,14 +1,20 @@
 <?php
-$host = 'localhost';
-$db   = 'school_db';
-$user = 'root'; 
-$pass = '';     
+
+$host = getenv('DB_HOST');
+$db   = getenv('DB_DATABASE');
+$user = getenv('DB_USERNAME');
+$pass = getenv('DB_PASSWORD');
+$port = getenv('DB_PORT') ?: 4000;
 $charset = 'utf8mb4';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
+
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+];
+
 try {
-     $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
-     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
-?>
