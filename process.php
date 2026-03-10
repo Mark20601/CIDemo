@@ -31,12 +31,7 @@ if (isset($_POST['add'])) {
     }
 }
 
-// Handle DELETE
-if (isset($_GET['delete'])) {
-    $id = $_GET['delete'];
-    $pdo->prepare("DELETE FROM students WHERE id = ?")->execute([$id]);
-    header("Location: index.php");
-}
+
 // Handle UPDATE
 if (isset($_POST['update'])) {
     $id = $_POST['id'];
