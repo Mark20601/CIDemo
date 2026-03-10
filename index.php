@@ -303,7 +303,7 @@
                         </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='7' class='empty-state'>📭 No students found. Add your first student above!</td></tr>";
+                    echo "<tr><td colspan='7' class='empty-state'>📭 No students found. Add your first student above! Thank You!</td></tr>";
                 }
                 ?>
             </tbody>
