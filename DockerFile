@@ -1,9 +1,16 @@
-FROM php:8.2-cli
+# Use an official PHP image with Apache pre-installed
+FROM php:8.2-apache
 
-WORKDIR /app
+RUN a2enmod rewrite
 
-COPY . .
+# 1. Install any common PHP extensions you might need (optional)
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-EXPOSE 10000
+# 2. Copy your project files into the web server directory
+COPY . /var/www/html/
 
-CMD ["php", "-S", "0.0.0.0:10000"]
+# 3. Tell Apache to listen on the port Render uses
+EXPOSE 80
+
+# 4. Start Apache in the foreground
+CMD ["apache2-foreground"]
