@@ -297,7 +297,7 @@
                             <td>
                                 <div class='action-links'>
                                     <a href='edit.php?id={$row['id']}' class='edit-link'>✏️ Edit</a>
-                                    
+                                    <a href='process.php?delete={$row['id']}' class='delete-link' onclick='return confirm(\"Are you sure you want to delete this student?\")'>🗑️ Delete</a>
                                 </div>
                             </td>
                         </tr>";

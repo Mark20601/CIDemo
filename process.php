@@ -56,4 +56,9 @@ if (isset($_POST['update'])) {
     
     header("Location: index.php");
 }
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $pdo->prepare("DELETE FROM students WHERE id = ?")->execute([$id]);
+    header("Location: index.php");
+}
 ?>
